@@ -1,0 +1,88 @@
+The lab — what the specimen processes are
+====================================================================
+
+Six small Python programs, each with its
+behaviour stated in advance, so that every
+tool in this guide can be checked against a
+known answer. None of them does anything
+but demonstrate; all of them stop on their
+own after the seconds you give them (600 by
+default).
+
+lab-spinner.py [seconds]
+    Burns one CPU core in a busy loop.
+    Watching tools should show it in state
+    R, at or near the top of any CPU sort,
+    with TIME climbing steadily. On an
+    unmetered machine its %CPU sits near
+    100 (one core); on a shared or metered
+    one it will read lower and share the
+    core — the guide's build machine
+    showed exactly that.
+
+lab-memory-eater.py [megabytes] [seconds]
+    Allocates the stated megabytes (200 in
+    the guide), touches one byte per page
+    so the memory is resident, and holds
+    it while sleeping. HARD-CAPPED at
+    300 MB inside the script: the lab must
+    never be able to summon the OOM killer
+    on its own machine. Asking for more
+    gets you 300 and a note.
+
+lab-sleeper.py [seconds]
+    Sleeps. State S, no CPU, tiny memory:
+    "running but idle," for contrast with
+    the spinner in every table.
+
+lab-churner.py [seconds]
+    Starts a `sleep 1` child, waits for
+    it, pauses, repeats. There is usually
+    one very young grandchild alive under
+    it — and sometimes, between children,
+    none. The specimen for processes too
+    short-lived to catch by looking twice.
+
+lab-family.py [seconds]
+    A parent that starts lab-sleeper and
+    lab-churner as its children and waits
+    for them: one household, three
+    generations when the churner's child
+    is alive, for pstree and ps --forest.
+
+lab-zombie-parent.py [seconds]
+    Forks a child that exits immediately,
+    then sleeps WITHOUT reaping it. The
+    child stays in the table as a zombie
+    (state Z, <defunct>) for the duration.
+    The parent reaps properly on its way
+    out, so nothing outlives the specimen.
+
+lab-stubborn.py [seconds]
+    Ignores SIGTERM and keeps sleeping.
+    TERM fails on it (that is the lesson);
+    KILL still works, and so does waiting
+    for its seconds to run out.
+
+Starting and stopping
+    sh start-lab.sh [seconds]   starts the
+        spinner, the eater (200 MB), the
+        family, and the zombie parent, and
+        records their PIDs in .lab-pids.
+    sh stop-lab.sh               TERMs
+        exactly those PIDs and their
+        children, then KILLs any survivors,
+        and removes .lab-pids.
+    Specimens also retire on their own
+    when their seconds expire, started
+    either way.
+
+Safety, stated once
+    The eater is capped. The spinner is
+    one core, not all of them. The zombie
+    holds nothing but a table entry. The
+    stubborn one can be KILLed at any
+    time. Nothing in this lab writes to
+    disk, opens a socket, or survives its
+    own timer — the worst it can do is
+    make one core warm for ten minutes.

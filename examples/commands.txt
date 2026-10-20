@@ -1,0 +1,58 @@
+Watching Your System — the commands, in guide order
+====================================================================
+
+VERSIONS AND THE MACHINE (ch. 1)
+    ps --version                  procps-ng 4.0.4 on the build machine
+    top --version                 same family, same version
+    free --version                same family again
+    pstree --version              PSmisc 23.7
+    nproc                         your core count; everything is read against it
+    htop --version                3.3.0; installed fresh for the build
+
+LOAD AVERAGE (ch. 2)
+    uptime                        the three numbers, with context
+    cat /proc/loadavg             where they live; 4th field is running/total
+
+THE CENSUS (ch. 3)
+    ps aux                        everyone, with the watcher’s columns
+    ps aux --sort=-%cpu | head    sorted by lifetime CPU appetite
+    ps aux --sort=-%mem | head    sorted by RSS share
+    ps -o pid,ppid,stat,ni,%cpu,%mem,rss,vsz,etime,args -p PID
+                                  exactly your columns, one process
+    pgrep -af lab-                find by command-line match, listed first
+    pidof python3                 PIDs of an exact program name
+
+FAMILIES (ch. 4)
+    pstree -p PID                 the household as a tree, with PIDs
+    ps --forest -o pid,ppid,stat,args -g PID
+                                  the census with branches drawn
+    ps -eo stat | grep -c ^Z      how many zombies, machine-wide
+
+top (ch. 5)
+    top -b -n 2 -d 2              batch; read the SECOND screen
+    top -b -o %MEM -n 2           batch, sorted by memory instead
+    (interactive keys: P sort CPU, M sort memory, 1 per-core lines,
+     I toggle Irix/Solaris accounting, x highlight sort column)
+
+htop (ch. 6)
+    htop                          meters, table, function-key bar
+    (keys: / search, \ filter, t or F5 tree, F6 sort, F2 setup, F10 quit)
+    ~/.config/htop/htoprc         where its settings live
+
+MEMORY (ch. 7)
+    free -h                       read available, not free
+    grep MemAvailable /proc/meminfo   the same truth at the source
+    vmstat 1                      swap movement (si/so) — described, not run
+
+ENDING THINGS (ch. 8)
+    kill -TERM PID                ask politely (kill’s default signal)
+    ps -o pid,stat,args -p PID    verify — sent is not the same as worked
+    kill -KILL PID                insist, when asking has failed
+    pkill -f pattern              signal by match — pgrep the list FIRST
+    killall name                  blunter: matches the process name alone
+    renice -n 10 -p PID           lower priority instead of ending it
+
+OVER TIME (ch. 9)
+    watch -n 1 'cat /proc/loadavg'    one fact, refreshed
+    top -b -n 1 >> snapshots.txt      witnesses that write things down
+    awk '/%Cpu/ {print $2}' snapshots.txt   the file, interrogated

@@ -1,0 +1,24 @@
+site_name: Watching Your System for Mere Mortals
+site_description: Plain-language process watching. Load averages read against your core count, ps and top and htop decoded column by column, memory without the myths, and signals used kindly, practised on a lab of specimen processes whose behaviour you know in advance.
+site_url: https://paulsullivan33-dev.github.io/watching-your-system-for-mere-mortals/
+
+# Guides live at the repo root (nice for GitHub browsing).
+# The deploy workflow copies them into docs/ before building.
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - What Watching Is: what-watching-is.md
+  - Load Average First: load-average-first.md
+  - "ps: The Census": ps-the-census.md
+  - "Families: Who Started Whom": families.md
+  - "top: The Live Screen": top-live.md
+  - "htop: The Friendlier Face": htop.md
+  - "Memory, Honestly": memory-honestly.md
+  - "Ending Things Kindly": ending-things-kindly.md
+  - Watching Over Time: watching-over-time.md
+  - Recipes: recipes.md
+  - Troubleshooting: troubleshooting.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md
