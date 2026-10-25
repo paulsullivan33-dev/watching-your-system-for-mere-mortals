@@ -1,6 +1,7 @@
 site_name: Watching Your System for Mere Mortals
 site_description: Plain-language process watching. Load averages read against your core count, ps and top and htop decoded column by column, memory without the myths, and signals used kindly, practised on a lab of specimen processes whose behaviour you know in advance.
 site_url: https://paulsullivan33-dev.github.io/watching-your-system-for-mere-mortals/
+copyright: 'Part of <a href="https://paulsullivan33-dev.github.io/mere-mortals/">For Mere Mortals</a> · Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, code MIT'
 
 # Guides live at the repo root (nice for GitHub browsing).
 # The deploy workflow copies them into docs/ before building.
