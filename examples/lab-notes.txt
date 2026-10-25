@@ -68,11 +68,15 @@ Starting and stopping
     sh start-lab.sh [seconds]   starts the
         spinner, the eater (200 MB), the
         family, and the zombie parent, and
-        records their PIDs in .lab-pids.
-    sh stop-lab.sh               TERMs
-        exactly those PIDs and their
-        children, then KILLs any survivors,
-        and removes .lab-pids.
+        records each PID with its start
+        time and name in .lab-pids.
+    sh stop-lab.sh               checks
+        each recorded process is still
+        the one that was started (a bare
+        PID is not proof -- PIDs get
+        recycled), TERMs those PIDs and
+        their children, then KILLs any
+        survivors, and removes .lab-pids.
     Specimens also retire on their own
     when their seconds expire, started
     either way.
